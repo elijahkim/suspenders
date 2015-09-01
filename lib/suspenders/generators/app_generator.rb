@@ -3,6 +3,9 @@ require 'rails/generators/rails/app/app_generator'
 
 module Suspenders
   class AppGenerator < Rails::Generators::AppGenerator
+    class_option :css_framework, type: :string, aliases: "-f", default: "bourbon",
+      desc: "Configure for selected css framework"
+
     class_option :database, type: :string, aliases: "-d", default: "postgresql",
       desc: "Configure for selected database (options: #{DATABASES.join("/")})"
 
@@ -31,6 +34,7 @@ module Suspenders
 
     def suspenders_customization
       invoke :customize_gemfile
+      invoke :setup_css_framework
       invoke :setup_development_environment
       invoke :setup_test_environment
       invoke :setup_production_environment
@@ -53,6 +57,10 @@ module Suspenders
       invoke :setup_bundler_audit
       invoke :setup_spring
       invoke :outro
+    end
+
+    def setup_css_framework
+      build :setup_css_framework, options[:css_framework]
     end
 
     def customize_gemfile

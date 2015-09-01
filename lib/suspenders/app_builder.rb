@@ -11,6 +11,14 @@ module Suspenders
         'raise_delivery_errors = false', 'raise_delivery_errors = true'
     end
 
+    def setup_css_framework(framework)
+      inject_into_file(
+        "Gemfile",
+        %{\ngem "#{framework}"},
+        after: "\"autoprefixer-rails\""
+      )
+    end
+
     def set_test_delivery_method
       inject_into_file(
         "config/environments/development.rb",

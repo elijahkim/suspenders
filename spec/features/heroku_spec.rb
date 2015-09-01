@@ -9,9 +9,7 @@ RSpec.describe "Heroku" do
   it "suspends a project for Heroku" do
     run_suspenders("--heroku=true")
 
-    expect(FakeHeroku).to(
-      have_gem_included(project_path, "rails_stdout_logging")
-    )
+    expect("rails_stdout_logging").to be_in_the_gemfile
     expect(FakeHeroku).to have_created_app_for("staging")
     expect(FakeHeroku).to have_created_app_for("production")
     expect(FakeHeroku).to have_configured_vars("staging", "SECRET_KEY_BASE")

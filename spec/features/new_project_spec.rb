@@ -133,6 +133,10 @@ RSpec.describe "Suspend a new project with default configuration" do
     end
   end
 
+  it "adds bourbon by default" do
+    expect("bourbon").to be_in_the_gemfile
+  end
+
   def analytics_partial
     IO.read("#{project_path}/app/views/application/_analytics.html.erb")
   end

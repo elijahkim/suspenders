@@ -18,3 +18,14 @@ RSpec.configure do |config|
     FakeGithub.clear!
   end
 end
+
+RSpec::Matchers.define :be_in_the_gemfile do |expected|
+  match do |gem_name|
+    gemfile = File.open(File.join(project_path, 'Gemfile'), 'r')
+
+    File.foreach(gemfile).any? do |line|
+      line.match(/#{Regexp.quote(gem_name)}/)
+    end
+  end
+end
+
